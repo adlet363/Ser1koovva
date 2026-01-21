@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ser1koovva</title>
+    <link rel="stylesheet" href="./styel.css">
+</head>
+<body>
+    <div class="hero">
+        <div class="container-1">
+            <div class="clock">
+                <h2>Kazakhstan/Aktobe-Region/Aktobe</h2>
+                <span id="hrs">00</span>
+                <span>:</span>
+                <span id="min">00</span>
+                <span>:</span>
+                <span id="sec">00</span>
+            </div>
+        </div>
+    </div>
+    <div class="hero">
+        <div class="container-2">
+            <div class="clock">
+                <h2>America/Texas/Houston</h2>
+                <span id="hrs-us">00</span>
+                <span>:</span>
+                <span id="min-us">00</span>
+                <span>:</span>
+                <span id="sec-us">00</span>
+            </div>
+        </div>
+    </div>
+
+    <Script>
+    let hrs = document.getElementById("hrs");
+    let min = document.getElementById("min");
+    let sec = document.getElementById("sec");
+    let hrs_us = document.getElementById("hrs-us");
+    let min_us = document.getElementById("min-us");
+    let sec_us = document.getElementById("sec-us");
+
+    setInterval(() => {
+     const now = new Date();
+
+     const parts = new Intl.DateTimeFormat("ru-RU", {
+    timeZone: "Asia/Aqtobe",
+       hour: "2-digit",
+       minute: "2-digit",
+       second: "2-digit"
+     }).formatToParts(now);
+    hrs.textContent = parts.find(p => p.type === "hour").value;
+    min.textContent = parts.find(p => p.type === "minute").value;
+    sec.textContent = parts.find(p => p.type === "second").value;
+    }, 1000);
+
+    setInterval(() => {
+     const now = new Date();
+
+     const parts_us = new Intl.DateTimeFormat("en-US", {
+       timeZone: "America/Chicago",
+       hour: "2-digit",
+       minute: "2-digit",
+       second: "2-digit"
+     }).formatToParts(now);
+    hrs_us.textContent = parts_us.find(p => p.type === "hour").value;
+    min_us.textContent = parts_us.find(p => p.type === "minute").value;
+    sec_us.textContent = parts_us.find(p => p.type === "second").value;
+     },1000);
+    </Script>
+</body>
+</html>
