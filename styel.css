@@ -172,6 +172,11 @@ body{
     justify-content: center;
     backdrop-filter: blur(40px);
     }
+    .clock p{
+    position: absolute;
+    top: 90px;
+    font-size: 16px;
+    }
     .container-1::before{
     content: '';
     width: 95px;
