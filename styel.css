@@ -17,7 +17,7 @@ body{
 }*/
 .container-1{
     width: 800px;
-    height: 180px;
+    height: 210px;
     position: absolute;
     top: 25%;
     left: 50%;
@@ -25,7 +25,7 @@ body{
 }
 .container-2{
     width: 800px;
-    height: 180px;
+    height: 210px;
     position: absolute;
     top: 75%;
     left: 50%;
@@ -45,6 +45,23 @@ body{
     position: absolute;
     margin-bottom: 135px;
 }
+.clock p{
+    position: absolute;
+    top: 173px;
+    font-size: 24px;
+}
+
+.clock-info{
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
 .container-1::before{
     content: '';
     width: 180px;
@@ -185,7 +202,7 @@ body{
     border-radius: 5px;
     position: absolute;
     left: -30px;
-    top: -25px; 
+    top: -25px;
     z-index: -1;
     }
     .container-2::after{
@@ -210,6 +227,10 @@ body{
     position: absolute;
     margin-bottom: 81px;
     font-size: 18px;
+    }
+    .clock-info{
+    bottom: 8px;
+    font-size: 12px;
     }
     .clock span::after{
     font-size: 12px;

@@ -16,6 +16,7 @@
                 <span id="min">00</span>
                 <span>:</span>
                 <span id="sec">00</span>
+                <p class="clock-info" id="info-kz">7 Feb 😊 morning</p>
             </div>
         </div>
     </div>
@@ -28,45 +29,68 @@
                 <span id="min-us">00</span>
                 <span>:</span>
                 <span id="sec-us">00</span>
+                <p class="clock-info" id="info-us">7 Feb 😊 morning</p>
             </div>
         </div>
     </div>
 
     <Script>
-    let hrs = document.getElementById("hrs");
-    let min = document.getElementById("min");
-    let sec = document.getElementById("sec");
-    let hrs_us = document.getElementById("hrs-us");
-    let min_us = document.getElementById("min-us");
-    let sec_us = document.getElementById("sec-us");
+    function getDayPeriodInfo(hour) {
+        if (hour >= 0 && hour < 6) return { emoji: "🌙", period: "night" };
+        if (hour < 12) return { emoji: "😊", period: "morning" };
+        if (hour < 18) return { emoji: "☀️", period: "afternoon" };
+        return { emoji: "🌆", period: "evening" };
+    }
 
-    setInterval(() => {
-     const now = new Date();
+    function updateClock({ hourId, minuteId, secondId, infoId, timeZone }) {
+        const now = new Date();
 
-     const parts = new Intl.DateTimeFormat("ru-RU", {
-    timeZone: "Asia/Aqtobe",
-       hour: "2-digit",
-       minute: "2-digit",
-       second: "2-digit"
-     }).formatToParts(now);
-    hrs.textContent = parts.find(p => p.type === "hour").value;
-    min.textContent = parts.find(p => p.type === "minute").value;
-    sec.textContent = parts.find(p => p.type === "second").value;
-    }, 1000);
+        const timeParts = new Intl.DateTimeFormat("en-GB", {
+            timeZone,
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hourCycle: "h23"
+        }).formatToParts(now);
 
-    setInterval(() => {
-     const now = new Date();
+        const hour = timeParts.find((part) => part.type === "hour").value;
+        const minute = timeParts.find((part) => part.type === "minute").value;
+        const second = timeParts.find((part) => part.type === "second").value;
 
-     const parts_us = new Intl.DateTimeFormat("en-US", {
-       timeZone: "America/Chicago",
-       hour: "2-digit",
-       minute: "2-digit",
-       second: "2-digit"
-     }).formatToParts(now);
-    hrs_us.textContent = parts_us.find(p => p.type === "hour").value;
-    min_us.textContent = parts_us.find(p => p.type === "minute").value;
-    sec_us.textContent = parts_us.find(p => p.type === "second").value;
-     },1000);
+        document.getElementById(hourId).textContent = hour;
+        document.getElementById(minuteId).textContent = minute;
+        document.getElementById(secondId).textContent = second;
+
+        const dateText = new Intl.DateTimeFormat("en-GB", {
+            timeZone,
+            day: "numeric",
+            month: "short"
+        }).format(now);
+
+        const dayPeriodInfo = getDayPeriodInfo(Number(hour));
+        document.getElementById(infoId).textContent = `${dateText} ${dayPeriodInfo.emoji} ${dayPeriodInfo.period}`;
+    }
+
+    function startClock(config) {
+        updateClock(config);
+        setInterval(() => updateClock(config), 1000);
+    }
+
+    startClock({
+        hourId: "hrs",
+        minuteId: "min",
+        secondId: "sec",
+        infoId: "info-kz",
+        timeZone: "Asia/Aqtobe"
+    });
+
+    startClock({
+        hourId: "hrs-us",
+        minuteId: "min-us",
+        secondId: "sec-us",
+        infoId: "info-us",
+        timeZone: "America/Chicago"
+    });
     </Script>
 </body>
 </html>
